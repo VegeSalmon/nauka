@@ -100,6 +100,16 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 .end p{margin:0;max-width:65ch}
 .row{display:flex;flex-wrap:wrap;gap:8px}
 .note{font-size:12px;color:var(--muted);max-width:75ch}
+/* Map always fits in the window: on wide screens controls on the left, map on the right sized to the window height. */
+.mapwrap{width:min(100%,calc((100vh - 140px)*1.073));width:min(100%,calc((100svh - 140px)*1.073));margin-inline:auto}
+@media (min-width:900px){
+  .wrap{max-width:1500px;display:grid;grid-template-columns:minmax(300px,360px) minmax(0,1fr);grid-template-rows:repeat(7,auto) 1fr;column-gap:24px;row-gap:0;align-items:start}
+  .wrap>*{grid-column:1;margin-bottom:12px;min-width:0}
+  .wrap>.mapwrap{grid-column:2;grid-row:1/-1;position:sticky;top:max(14px,env(safe-area-inset-top,0px));margin-bottom:0;
+    width:min(100%,calc((100vh - 28px)*1.073));width:min(100%,calc((100svh - 28px)*1.073));justify-self:center}
+  .bar{grid-template-columns:1fr}
+  .stats{text-align:left}
+}
 @media (prefers-reduced-motion:reduce){.r.cur .v,.r.hint .v,.shake{animation:none}}
 @media (max-width:560px){.bar{grid-template-columns:1fr}.stats{text-align:left}}
 </style>
