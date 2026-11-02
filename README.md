@@ -8,7 +8,7 @@ Darmowe quizy i materiały do nauki, robione przy okazji własnej nauki do szko�
 
 | Przedmiot | Materiał | Ścieżka |
 |---|---|---|
-| Geografia | Rzeki Polski (48 rzek): nauka, klikanie, wpisywanie | [`geografia/rzeki/`](geografia/rzeki/) |
+| Geografia | Rzeki Polski (48 rzek): nauka, klikanie, wpisywanie; sekcje regionalne + wszystkie naraz | [`geografia/rzeki/`](geografia/rzeki/) |
 
 ## Zasady
 
