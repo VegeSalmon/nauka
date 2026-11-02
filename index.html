@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Nauka · darmowe materiały</title>
+<meta name="description" content="Darmowe quizy i materiały do nauki do szkoły i matury: geografia, chemia i inne.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Barlow+Condensed:wght@600;700&family=Source+Serif+4:ital,wght@1,600&display=swap">
+<style>
+/* Layout: one narrow column — masthead, then one section per subject with its materials as rows. */
+:root{
+  --paper:#eaf0f4; --card:#ffffff; --ink:#13202a; --muted:#566874; --line:#cbd6de; --accent:#1c5ea8; --accent-soft:#dbe8f6;
+  --f-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-map:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){:root{--paper:#0e151b;--card:#16212a;--ink:#e4ecf2;--muted:#93a4b1;--line:#283641;--accent:#72aceb;--accent-soft:#1b3048;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 48px}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+h1{font-family:var(--f-display);font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:clamp(40px,10vw,64px);line-height:.95;margin:0}
+.lead{margin:10px 0 0;color:var(--muted);max-width:60ch}
+h2{font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:20px;color:var(--muted);margin:0 0 8px}
+.list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.item{display:grid;grid-template-columns:1fr auto;gap:2px 16px;align-items:baseline;padding:14px 4px;border-bottom:1px solid var(--line);color:inherit;text-decoration:none}
+.item:hover .t,.item:focus-visible .t{color:var(--accent)}
+.item:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.t{font-family:var(--f-map);font-style:italic;font-weight:600;font-size:22px;line-height:1.2}
+.kind{font-size:13px;color:var(--muted);white-space:nowrap}
+.d{grid-column:1/-1;color:var(--muted);font-size:14px;min-width:0}
+footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Nauka</h1>
+    <p class="lead">Darmowe quizy i materiały, które robię, ucząc się do szkoły. Wszystko działa w przeglądarce, bez logowania i bez reklam.</p>
+  </header>
+
+  <section>
+    <h2>Geografia</h2>
+    <div class="list">
+      <a class="item" href="geografia/rzeki/">
+        <span class="t">Rzeki Polski</span><span class="kind">quiz · 48 rzek</span>
+        <span class="d">Mapa wektorowa z OpenStreetMap. Tryb nauki z podświetlaniem całej rzeki, klikanie na mapie i wpisywanie nazw.</span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    Znalazłeś błąd albo chcesz coś dodać? Napisz w <a href="https://github.com/VegeSalmon/nauka/issues">zgłoszeniach na GitHubie</a>.
+    Dane map: © współtwórcy OpenStreetMap (ODbL), Natural Earth.
+  </footer>
+</div>
+</body>
+</html>
