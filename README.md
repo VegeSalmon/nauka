@@ -16,6 +16,14 @@ Darmowe quizy i materiały do nauki, robione przy okazji własnej nauki do szko�
 - Materiał trafia tutaj dopiero po sprawdzeniu treści.
 - Nie kopiujemy treści z podręczników ani grafik wydawnictw. Źródła danych są podane przy każdym materiale.
 
+## Statystyki
+
+Licznik odwiedzin: [GoatCounter](https://www.goatcounter.com/) (bez ciasteczek i bez danych osobowych). Każda nowa strona dostaje przed `</body>`:
+
+```html
+<script data-goatcounter="https://vegesalmon-nauka.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+```
+
 ## Dane
 
 - Rzeki: © współtwórcy [OpenStreetMap](https://www.openstreetmap.org/copyright), licencja ODbL. Pobrane przez Overpass API, zrzutowane do układu PUWG 1992 i uproszczone. Krótkie przerwy (odcinki przez jeziora i zbiorniki) połączone prostymi odcinkami.
