@@ -30,6 +30,8 @@
   --sea:#0d1820; --land:#1b2731; --nb:#141e26; --nb-line:#2f3e4a; --border:#9fb2c0; --lake:#2c5d8c;
   --river:#6cb0f2; --hl:#ffb02e; --city:#a9b8c4; --ok:#5ec48d; --r1:#e2b04f; --r2:#f08a4a; --bad:#f06e60; color-scheme:dark}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
 body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 32px}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
