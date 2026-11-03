@@ -24,6 +24,22 @@ Licznik odwiedzin: [GoatCounter](https://www.goatcounter.com/) (bez ciasteczek i
 <script data-goatcounter="https://vegesalmon-nauka.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 ```
 
+## Zbieranie odpowiedzi
+
+Quizy wysyłają anonimowe odpowiedzi (pytanie, odpowiedź, czy poprawna, która próba, czas) do Workera na Cloudflare z bazą D1. Kod i instrukcja wdrożenia są w [`api/`](api/), a opis dla użytkowników w [`prywatnosc/`](prywatnosc/).
+
+Każdy nowy materiał ładuje wspólny [`track.js`](track.js) i loguje zdarzenia:
+
+```html
+<script src="../../track.js"></script>
+<script>
+  NaukaTrack.init("przedmiot/temat");           // np. "geo/rzeki"
+  NaukaTrack.log({t:"answer", r:runda, mo:tryb, se:sekcja, it:pytanie, re:odpowiedź, ok:true, tr:1, rt:1234});
+</script>
+```
+
+Typy zdarzeń: `answer`, `reveal` (pokazanie dobrej odpowiedzi po 3 pomyłkach), `view` (podgląd w trybie nauki), `round_start`, `round_end`. Domyślnie identyfikator żyje tylko do zamknięcia strony. Stały identyfikator zapisuje się w przeglądarce dopiero po zaznaczeniu zgody (`NaukaTrack.setConsent(true)`). Dane wysyłane są wyłącznie ze strony na github.io.
+
 ## Dane
 
 - Rzeki: © współtwórcy [OpenStreetMap](https://www.openstreetmap.org/copyright), licencja ODbL. Pobrane przez Overpass API, zrzutowane do układu PUWG 1992 i uproszczone. Krótkie przerwy (odcinki przez jeziora i zbiorniki) połączone prostymi odcinkami.
