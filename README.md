@@ -9,6 +9,7 @@ Darmowe quizy i materiały do nauki, robione przy okazji własnej nauki do szko�
 | Przedmiot | Materiał | Ścieżka |
 |---|---|---|
 | Geografia | Rzeki Polski (48 rzek): nauka, klikanie, wpisywanie; sekcje regionalne + wszystkie naraz | [`geografia/rzeki/`](geografia/rzeki/) |
+| Biologia | Zmienność i mutacje: ściąga + quiz (26 pytań, błędne wracają) | [`biologia/mutacje/`](biologia/mutacje/) |
 
 ## Zasady
 

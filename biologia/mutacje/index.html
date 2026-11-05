@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Zmienność i mutacje · Nauka</title>
+<meta name="description" content="Darmowa ściąga i quiz: zmienność organizmów, rodzaje mutacji, mutageny. Biologia, liceum i technikum.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Barlow+Condensed:wght@600;700&family=Source+Serif+4:ital,wght@1,600&display=swap">
+<style>
+/* Layout: one column — title, tabs (ściąga / quiz), then either the summary sheet or the quiz card. */
+:root{
+  --paper:#eaf0f4; --card:#ffffff; --ink:#13202a; --muted:#566874; --line:#cbd6de;
+  --accent:#1c5ea8; --accent-soft:#dbe8f6; --ok:#2b8a4f; --ok-soft:#dcefe3; --bad:#c43a2b; --bad-soft:#f7e0dc; --warn:#a8731a;
+  --f-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-map:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0e151b; --card:#16212a; --ink:#e4ecf2; --muted:#93a4b1; --line:#283641; --accent:#72aceb; --accent-soft:#1b3048;
+  --ok:#5ec48d; --ok-soft:#173527; --bad:#f06e60; --bad-soft:#3b1e1b; --warn:#e2b04f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0e151b; --card:#16212a; --ink:#e4ecf2; --muted:#93a4b1; --line:#283641; --accent:#72aceb; --accent-soft:#1b3048;
+  --ok:#5ec48d; --ok-soft:#173527; --bad:#f06e60; --bad-soft:#3b1e1b; --warn:#e2b04f; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 40px}
+.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.back{color:var(--accent);font-weight:700;text-decoration:none;font-size:14px;align-self:flex-start}
+.back:hover{text-decoration:underline}
+h1{font-family:var(--f-display);font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:clamp(30px,7vw,44px);line-height:1;margin:0}
+h1 span{color:var(--accent)}
+.sub{color:var(--muted);font-size:14px;margin:6px 0 0}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card);align-self:flex-start}
+.seg button{border:0;background:transparent;color:var(--ink);font:inherit;font-weight:700;padding:8px 18px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--card)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+/* ściąga */
+.sheet h2{font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:20px;color:var(--accent);margin:22px 0 6px}
+.sheet h2:first-child{margin-top:0}
+.sheet p{margin:6px 0}
+.sheet ul{margin:6px 0;padding-left:20px}
+.sheet li{margin:3px 0}
+.def{font-family:var(--f-map);font-style:italic;font-weight:600;font-size:19px;line-height:1.35}
+.tree{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:14px;line-height:1.55;background:var(--paper);border-radius:8px;padding:12px 14px;overflow-x:auto;white-space:pre;margin:8px 0}
+table{border-collapse:collapse;width:100%;font-size:15px;margin:8px 0}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+th{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+.tip{border-left:4px solid var(--warn);padding:6px 12px;background:var(--paper);border-radius:0 8px 8px 0;font-size:15px;margin:10px 0}
+.extra{font-size:12px;font-weight:700;color:var(--warn);text-transform:uppercase;letter-spacing:.06em}
+/* quiz */
+.qtop{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.prog{height:6px;border-radius:99px;background:var(--paper);overflow:hidden;margin:8px 0 14px}
+.prog i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
+.q{font-family:var(--f-map);font-style:italic;font-weight:600;font-size:clamp(20px,4.6vw,25px);line-height:1.3;margin:0 0 14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;font:inherit;font-size:16px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt kbd{font:700 12px/1 var(--f-body);color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:3px 6px;margin-top:2px}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt:disabled{cursor:default}
+.fb{margin-top:14px;font-size:15px;padding:10px 12px;border-radius:8px;background:var(--paper)}
+.fb b.ok{color:var(--ok)} .fb b.bad{color:var(--bad)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;padding:9px 16px;border-radius:8px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--card)}
+.chk{display:inline-flex;gap:6px;align-items:center;font-size:14px;color:var(--muted);cursor:pointer}
+.chk a{color:var(--accent)}
+.big{font-family:var(--f-display);font-weight:700;font-size:56px;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.miss{margin:10px 0 0;padding-left:20px;font-size:15px}
+.miss li{margin:4px 0}
+@media (max-width:480px){.card{padding:14px}table{font-size:14px}th,td{padding:6px 5px}.tree{font-size:13px}}
+footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+footer a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../../">← Nauka</a>
+  <header>
+    <h1>Zmienność i <span>mutacje</span></h1>
+    <p class="sub">Biologia · ściąga i quiz na kartkówkę: rodzaje zmienności, podziały mutacji, mutageny.</p>
+  </header>
+
+  <div class="seg" role="group" aria-label="Tryb">
+    <button id="tab-sheet" aria-pressed="true">Ściąga</button>
+    <button id="tab-quiz" aria-pressed="false">Quiz</button>
+  </div>
+
+  <!-- ŚCIĄGA -->
+  <section id="sheet" class="card sheet">
+    <h2>Zmienność</h2>
+    <p class="def">Zmienność — występowanie różnic między osobnikami należącymi do tej samej populacji.</p>
+    <div class="tree">Zmienność organizmów
+├─ niedziedziczna
+│  (modyfikacyjna, fluktuacyjna)
+└─ dziedziczna (genetyczna)
+   ├─ rekombinacyjna
+   └─ mutacyjna
+      ├─ mutacje genowe
+      └─ mutacje chromosomowe
+         ├─ strukturalne
+         └─ liczbowe</div>
+
+    <h2>Zmienność rekombinacyjna</h2>
+    <p>Tworzenie <b>nowych układów z już istniejących alleli</b> (nowe allele nie powstają). Źródła:</p>
+    <ul>
+      <li><b>crossing-over</b>,</li>
+      <li><b>niezależna segregacja chromosomów</b> w mejozie,</li>
+      <li><b>łączenie się gamet</b> pochodzących od różnych rodziców (zapłodnienie).</li>
+    </ul>
+
+    <h2>Mutacja</h2>
+    <p class="def">Mutacja — nagła, skokowa zmiana w materiale genetycznym.</p>
+    <table>
+      <thead><tr><th>Kryterium podziału</th><th>Rodzaje</th></tr></thead>
+      <tbody>
+        <tr><td>rodzaj komórek</td><td>somatyczne · generatywne</td></tr>
+        <tr><td>przyczyna</td><td>spontaniczne · indukowane</td></tr>
+        <tr><td>poziom organizacji materiału genetycznego</td><td>genowe · chromosomowe</td></tr>
+      </tbody>
+    </table>
+    <div class="tip">Na kartkówce najłatwiej pomylić kryteria. Pamiętaj parami: <b>komórki</b> → somatyczne/generatywne, <b>przyczyna</b> → spontaniczne/indukowane, <b>poziom</b> → genowe/chromosomowe.</div>
+
+    <h2>Somatyczne vs generatywne</h2>
+    <table>
+      <thead><tr><th></th><th>Somatyczne</th><th>Generatywne</th></tr></thead>
+      <tbody>
+        <tr><td>gdzie</td><td>DNA komórek somatycznych (ciała)</td><td>komórki rozrodcze</td></tr>
+        <tr><td>kogo dotyczą</td><td>tylko osobnika, u którego zaszły</td><td>mogą przejść na potomstwo</td></tr>
+        <tr><td>dziedziczne?</td><td><b>nie</b></td><td><b>tak</b></td></tr>
+      </tbody>
+    </table>
+
+    <h2>Spontaniczne vs indukowane</h2>
+    <p><b>Spontaniczne</b> — powstają w wyniku <b>błędów podczas replikacji DNA</b>. Replikacja jest bardzo precyzyjna, ale zdarzają się pomyłki, np. błędnie wstawiony nukleotyd. Większość z nich usuwa <b>polimeraza DNA</b>.</p>
+    <p><b>Indukowane</b> — powstają w wyniku działania na komórkę określonego czynnika <b>fizycznego, chemicznego lub biologicznego</b>, czyli <b>mutagenu</b>.</p>
+    <p><span class="extra">poza notatkami · typowe przykłady</span><br>
+      fizyczne: promieniowanie UV, promieniowanie rentgenowskie (X) i jonizujące · chemiczne: np. związki z dymu tytoniowego (benzo[a]piren), azbest · biologiczne: niektóre wirusy (np. HPV).</p>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card" hidden>
+    <div id="q-start">
+      <p class="q" style="margin-bottom:8px">Quiz: zmienność i mutacje</p>
+      <p class="sub" style="margin-top:0">Pytania w losowej kolejności. Błędne wracają na koniec rundy, aż odpowiesz dobrze. Wynik liczy odpowiedzi trafione za pierwszym razem. Klawisze 1–4 wybierają odpowiedź, Enter przechodzi dalej.</p>
+      <div class="row">
+        <label class="chk"><input type="checkbox" id="extras" checked> pytania o przykłady mutagenów (spoza notatek)</label>
+      </div>
+      <div class="row">
+        <button class="btn primary" id="start">Zaczynamy</button>
+        <span class="chk" id="consent-wrap" hidden><label class="chk"><input type="checkbox" id="consent"> zapisuj anonimowo moje postępy</label> <a href="../../prywatnosc/">jak to działa</a></span>
+      </div>
+    </div>
+
+    <div id="q-run" hidden>
+      <div class="qtop"><span id="q-count"></span><span id="q-score"></span></div>
+      <div class="prog"><i id="q-bar"></i></div>
+      <p class="q" id="q-text"></p>
+      <div class="opts" id="q-opts"></div>
+      <div class="fb" id="q-fb" hidden></div>
+      <div class="row"><button class="btn primary" id="next" hidden>Dalej</button></div>
+    </div>
+
+    <div id="q-end" hidden>
+      <p class="sub" style="margin:0">Dobrze za pierwszym razem</p>
+      <div class="big" id="end-score"></div>
+      <p id="end-note" style="margin:8px 0 0"></p>
+      <ul class="miss" id="end-miss"></ul>
+      <div class="row">
+        <button class="btn primary" id="again">Jeszcze raz</button>
+        <button class="btn" id="again-miss" hidden>Tylko te, w których był błąd</button>
+        <button class="btn" id="to-sheet">Wróć do ściągi</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Treść na podstawie notatek z lekcji „Zmienność organizmów. Mutacje”. Znalazłeś błąd? Napisz w <a href="https://github.com/VegeSalmon/nauka/issues">zgłoszeniach na GitHubie</a>. <a href="../../prywatnosc/">Prywatność</a>.
+  </footer>
+</div>
+
+<script src="../../track.js"></script>
+<script>
+const T=window.NaukaTrack||{init(){},log(){},enabled(){return false},consent(){return false},setConsent(){}};T.init("bio/mutacje");
+const $=id=>document.getElementById(id);
+
+// Pytania: q, a (dobra), w (złe), e (wyjaśnienie), x=true → spoza notatek
+const BANK=[
+ {id:"zm-def",q:"Czym jest zmienność?",a:"Występowaniem różnic między osobnikami należącymi do tej samej populacji",w:["Nagłą, skokową zmianą w materiale genetycznym","Przystosowaniem organizmu do zmian środowiska","Powstawaniem nowych gatunków"],e:"Druga odpowiedź to definicja mutacji, nie zmienności."},
+ {id:"mut-def",q:"Mutacja to…",a:"nagła, skokowa zmiana w materiale genetycznym",w:["stopniowa zmiana cech pod wpływem środowiska","wymiana odcinków między chromosomami homologicznymi","nowy układ istniejących alleli"],e:"Wymiana odcinków to crossing-over, nowy układ alleli to zmienność rekombinacyjna."},
+ {id:"niedz-nazwy",q:"Jak inaczej nazywa się zmienność niedziedziczną?",a:"Modyfikacyjna (fluktuacyjna)",w:["Genetyczna","Rekombinacyjna","Mutacyjna"],e:"Genetyczna to inna nazwa zmienności dziedzicznej, a rekombinacyjna i mutacyjna to jej rodzaje."},
+ {id:"dz-nazwa",q:"Jak inaczej nazywa się zmienność dziedziczną?",a:"Genetyczna",w:["Modyfikacyjna","Fluktuacyjna","Środowiskowa"],e:"Modyfikacyjna i fluktuacyjna to nazwy zmienności niedziedzicznej."},
+ {id:"dz-rodzaje",q:"Na jakie dwa rodzaje dzielimy zmienność dziedziczną?",a:"Mutacyjną i rekombinacyjną",w:["Modyfikacyjną i fluktuacyjną","Somatyczną i generatywną","Genową i chromosomową"],e:"Somatyczne/generatywne i genowe/chromosomowe to podziały samych mutacji."},
+ {id:"chr-podzial",q:"Mutacje chromosomowe dzielimy na…",a:"strukturalne i liczbowe",w:["genowe i punktowe","spontaniczne i indukowane","somatyczne i generatywne"],e:"Strukturalne zmieniają budowę chromosomu, liczbowe liczbę chromosomów."},
+ {id:"rek-def",q:"Na czym polega zmienność rekombinacyjna?",a:"Na tworzeniu nowych układów z już istniejących alleli",w:["Na powstawaniu nowych alleli w wyniku mutacji","Na zmianach cech pod wpływem środowiska","Na naprawie błędów replikacji"],e:"Rekombinacja tylko przetasowuje to, co już jest. Nowe allele dają mutacje."},
+ {id:"rek-nie",q:"Co NIE jest źródłem zmienności rekombinacyjnej?",a:"Błędnie wstawiony nukleotyd podczas replikacji",w:["Crossing-over","Niezależna segregacja chromosomów w mejozie","Łączenie gamet pochodzących od różnych rodziców"],e:"Błąd replikacji to mutacja spontaniczna, czyli zmienność mutacyjna."},
+ {id:"segr",q:"W jakim procesie zachodzi niezależna segregacja chromosomów?",a:"W mejozie",w:["W mitozie","W replikacji DNA","W transkrypcji"],e:"Mejoza tworzy gamety i wtedy chromosomy rozchodzą się niezależnie."},
+ {id:"pod-kom",q:"Ze względu na rodzaj komórek mutacje dzielimy na…",a:"somatyczne i generatywne",w:["spontaniczne i indukowane","genowe i chromosomowe","strukturalne i liczbowe"],e:"Para do zapamiętania: komórki → somatyczne/generatywne."},
+ {id:"pod-przy",q:"Ze względu na przyczynę mutacje dzielimy na…",a:"spontaniczne i indukowane",w:["somatyczne i generatywne","genowe i chromosomowe","strukturalne i liczbowe"],e:"Para do zapamiętania: przyczyna → spontaniczne/indukowane."},
+ {id:"pod-poz",q:"Ze względu na poziom organizacji materiału genetycznego mutacje dzielimy na…",a:"genowe i chromosomowe",w:["somatyczne i generatywne","spontaniczne i indukowane","dziedziczne i niedziedziczne"],e:"Para do zapamiętania: poziom → genowe/chromosomowe."},
+ {id:"som-dz",q:"Czy mutacje somatyczne są dziedziczne?",a:"Nie, dotyczą tylko osobnika, u którego zaszły",w:["Tak, zawsze","Tak, ale tylko u roślin","Tylko gdy są indukowane"],e:"Somatyczne zachodzą w komórkach ciała, więc nie trafiają do gamet."},
+ {id:"gen-gdzie",q:"Mutacje generatywne zachodzą w…",a:"komórkach rozrodczych",w:["komórkach somatycznych","komórkach skóry","każdej komórce organizmu"],e:"Dlatego mutacje generatywne są dziedziczne."},
+ {id:"gen-dz",q:"Które mutacje są dziedziczne?",a:"Generatywne",w:["Somatyczne","Wszystkie spontaniczne","Wszystkie indukowane"],e:"Spontaniczna czy indukowana mówi o przyczynie, a nie o tym, czy mutacja przejdzie na potomstwo."},
+ {id:"sc-skora",q:"Pod wpływem słońca w komórce skóry na ręce doszło do mutacji. Jaka to mutacja?",a:"Somatyczna, nie przejdzie na potomstwo",w:["Generatywna, przejdzie na potomstwo","Somatyczna, przejdzie na potomstwo","Generatywna, nie przejdzie na potomstwo"],e:"Komórka skóry to komórka somatyczna. Przy okazji: słońce (UV) to mutagen fizyczny, więc mutacja jest też indukowana."},
+ {id:"sc-gameta",q:"Mutacja zaszła w komórce, z której powstanie komórka jajowa. Jaka to mutacja?",a:"Generatywna, może zostać odziedziczona",w:["Somatyczna, nie zostanie odziedziczona","Somatyczna, może zostać odziedziczona","Chromosomowa liczbowa z definicji"],e:"Linia komórek rozrodczych → mutacja generatywna."},
+ {id:"spo-przy",q:"Co jest przyczyną mutacji spontanicznych?",a:"Błędy podczas replikacji DNA",w:["Działanie mutagenu","Crossing-over","Zapłodnienie"],e:"Mutagen to przyczyna mutacji indukowanych."},
+ {id:"spo-prz",q:"Przykład błędu replikacji prowadzącego do mutacji spontanicznej to…",a:"błędnie wstawiony nukleotyd",w:["wniknięcie wirusa do komórki","działanie promieniowania UV","wymiana odcinków chromatyd"],e:"Wirus i UV to mutageny (mutacje indukowane), a wymiana odcinków to crossing-over."},
+ {id:"pol",q:"Co usuwa większość błędów powstałych podczas replikacji?",a:"Polimeraza DNA",w:["Helikaza","Rybosom","Mutagen"],e:"Polimeraza DNA nie tylko dobudowuje nić, ale też poprawia większość pomyłek."},
+ {id:"ind-def",q:"Mutacje indukowane powstają w wyniku…",a:"działania na komórkę czynnika fizycznego, chemicznego lub biologicznego",w:["błędów podczas replikacji DNA","niezależnej segregacji chromosomów","zmian warunków środowiska bez wpływu na DNA"],e:"Czynnik wywołujący taką mutację to mutagen."},
+ {id:"mutagen",q:"Jak nazywa się czynnik wywołujący mutację?",a:"Mutagen",w:["Allel","Gen","Polimeraza"],e:"Mutageny dzielimy na fizyczne, chemiczne i biologiczne."},
+ {id:"mutagen-3",q:"Na jakie trzy grupy dzielimy mutageny?",a:"Fizyczne, chemiczne, biologiczne",w:["Genowe, chromosomowe, genomowe","Spontaniczne, indukowane, somatyczne","Strukturalne, liczbowe, punktowe"],e:"Pozostałe odpowiedzi to rodzaje mutacji, nie mutagenów."},
+ {id:"x-fiz",x:true,q:"Promieniowanie UV i promieniowanie rentgenowskie to mutageny…",a:"fizyczne",w:["chemiczne","biologiczne","spontaniczne"],e:"Promieniowanie to czynnik fizyczny."},
+ {id:"x-chem",x:true,q:"Związki z dymu tytoniowego (np. benzo[a]piren) to mutageny…",a:"chemiczne",w:["fizyczne","biologiczne","generatywne"],e:"To substancje chemiczne, które uszkadzają DNA."},
+ {id:"x-bio",x:true,q:"Niektóre wirusy (np. HPV) to mutageny…",a:"biologiczne",w:["fizyczne","chemiczne","rekombinacyjne"],e:"Organizmy i wirusy zaliczamy do mutagenów biologicznych."}
+];
+
+let S={round:0,queue:[],total:0,done:0,first:new Set(),missed:new Set(),tries:{},cur:null,opts:[],answered:false,shown:0};
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+function tab(which){
+  const quiz=which==="quiz";
+  $("tab-sheet").setAttribute("aria-pressed",!quiz);$("tab-quiz").setAttribute("aria-pressed",quiz);
+  $("sheet").hidden=quiz;$("quiz").hidden=!quiz;
+}
+$("tab-sheet").onclick=()=>tab("sheet");$("tab-quiz").onclick=()=>tab("quiz");
+$("to-sheet").onclick=()=>{tab("sheet");showStart()};
+
+function showStart(){$("q-start").hidden=false;$("q-run").hidden=true;$("q-end").hidden=true}
+
+function start(only){
+  let items=only?BANK.filter(b=>only.has(b.id)):BANK.filter(b=>$("extras").checked||!b.x);
+  S.round++;S.queue=shuffle(items.slice());S.total=items.length;S.done=0;S.first=new Set();S.missed=new Set();S.tries={};
+  T.log({t:"round_start",r:S.round,mo:only?"bledy":"wszystko",se:$("extras").checked?"z_przykladami":"notatki"});
+  $("q-start").hidden=true;$("q-end").hidden=true;$("q-run").hidden=false;
+  next();
+}
+$("start").onclick=()=>start();
+$("again").onclick=()=>start();
+$("again-miss").onclick=()=>start(new Set(S.missed));
+
+function next(){
+  if(!S.queue.length) return end();
+  S.cur=S.queue.shift();S.answered=false;S.shown=performance.now();
+  S.tries[S.cur.id]=(S.tries[S.cur.id]||0)+1;
+  S.opts=shuffle([S.cur.a,...S.cur.w]);
+  $("q-text").textContent=S.cur.q;
+  $("q-opts").innerHTML="";
+  S.opts.forEach((o,i)=>{const b=document.createElement("button");b.className="opt";b.innerHTML=`<kbd>${i+1}</kbd><span></span>`;b.lastChild.textContent=o;b.onclick=()=>pick(i);$("q-opts").appendChild(b)});
+  $("q-fb").hidden=true;$("next").hidden=true;
+  $("q-count").textContent=`Opanowane ${S.done} / ${S.total}`+(S.tries[S.cur.id]>1?" · powtórka":"");
+  $("q-score").textContent=`za 1. razem: ${S.first.size}`;
+  $("q-bar").style.width=(100*S.done/S.total)+"%";
+}
+
+function pick(i){
+  if(S.answered) return;S.answered=true;
+  const choice=S.opts[i],ok=choice===S.cur.a,tr=S.tries[S.cur.id];
+  [...$("q-opts").children].forEach((b,j)=>{b.disabled=true;if(S.opts[j]===S.cur.a)b.classList.add("right");else if(j===i)b.classList.add("wrong")});
+  if(ok){S.done++;if(tr===1)S.first.add(S.cur.id)}else{S.missed.add(S.cur.id);S.queue.push(S.cur)}
+  T.log({t:"answer",r:S.round,it:S.cur.id,re:choice,ok:ok,tr:tr,rt:Math.round(performance.now()-S.shown)});
+  $("q-fb").innerHTML=(ok?'<b class="ok">Dobrze.</b> ':'<b class="bad">Źle.</b> Dobra odpowiedź: <b></b>. ')+'<span></span>';
+  if(!ok)$("q-fb").querySelector("b:nth-of-type(2)").textContent=S.cur.a;
+  $("q-fb").lastChild.textContent=S.cur.e+(ok?"":" To pytanie wróci później.");
+  $("q-fb").hidden=false;$("next").hidden=false;$("next").focus();
+  $("q-bar").style.width=(100*S.done/S.total)+"%";
+  $("q-score").textContent=`za 1. razem: ${S.first.size}`;
+}
+$("next").onclick=next;
+
+function end(){
+  $("q-run").hidden=true;$("q-end").hidden=false;
+  const pct=Math.round(100*S.first.size/S.total);
+  $("end-score").textContent=`${S.first.size}/${S.total}`;
+  T.log({t:"round_end",r:S.round,ok:S.first.size,tr:S.total});
+  $("end-note").textContent=pct>=90?"Prawie bez błędów. Na kartkówkę wystarczy rzut oka na ściągę.":pct>=70?"Nieźle. Przejrzyj pytania poniżej i powtórz same błędy.":"Warto jeszcze raz przeczytać ściągę i powtórzyć quiz.";
+  const ul=$("end-miss");ul.innerHTML="";
+  BANK.filter(b=>S.missed.has(b.id)).forEach(b=>{const li=document.createElement("li");li.textContent=`${b.q} → ${b.a}`;ul.appendChild(li)});
+  $("again-miss").hidden=!S.missed.size;
+}
+
+document.addEventListener("keydown",e=>{
+  if($("q-run").hidden||e.target.tagName==="INPUT") return;
+  if(!S.answered&&/^[1-4]$/.test(e.key)){const i=+e.key-1;if(i<S.opts.length)pick(i)}
+  else if(S.answered&&e.key==="Enter"&&document.activeElement!==$("next")){e.preventDefault();next()}
+});
+
+if(T.enabled()){$("consent-wrap").hidden=false;$("consent").checked=T.consent();$("consent").onchange=e=>T.setConsent(e.target.checked)}
+</script>
+<script data-goatcounter="https://vegesalmon-nauka.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
